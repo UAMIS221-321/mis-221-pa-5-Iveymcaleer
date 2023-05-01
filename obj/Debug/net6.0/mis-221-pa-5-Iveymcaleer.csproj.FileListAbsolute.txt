@@ -1,0 +1,15 @@
+C:\Users\Owner\assignments\mis-221-pa-5-Iveymcaleer\obj\Debug\net6.0\mis-221-pa-5-Iveymcaleer.csproj.AssemblyReference.cache
+C:\Users\Owner\assignments\mis-221-pa-5-Iveymcaleer\obj\Debug\net6.0\mis-221-pa-5-Iveymcaleer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Owner\assignments\mis-221-pa-5-Iveymcaleer\obj\Debug\net6.0\mis-221-pa-5-Iveymcaleer.AssemblyInfoInputs.cache
+C:\Users\Owner\assignments\mis-221-pa-5-Iveymcaleer\obj\Debug\net6.0\mis-221-pa-5-Iveymcaleer.AssemblyInfo.cs
+C:\Users\Owner\assignments\mis-221-pa-5-Iveymcaleer\obj\Debug\net6.0\mis-221-pa-5-Iveymcaleer.csproj.CoreCompileInputs.cache
+C:\Users\Owner\assignments\mis-221-pa-5-Iveymcaleer\bin\Debug\net6.0\mis-221-pa-5-Iveymcaleer.exe
+C:\Users\Owner\assignments\mis-221-pa-5-Iveymcaleer\bin\Debug\net6.0\mis-221-pa-5-Iveymcaleer.deps.json
+C:\Users\Owner\assignments\mis-221-pa-5-Iveymcaleer\bin\Debug\net6.0\mis-221-pa-5-Iveymcaleer.runtimeconfig.json
+C:\Users\Owner\assignments\mis-221-pa-5-Iveymcaleer\bin\Debug\net6.0\mis-221-pa-5-Iveymcaleer.dll
+C:\Users\Owner\assignments\mis-221-pa-5-Iveymcaleer\bin\Debug\net6.0\mis-221-pa-5-Iveymcaleer.pdb
+C:\Users\Owner\assignments\mis-221-pa-5-Iveymcaleer\obj\Debug\net6.0\mis-221-pa-5-Iveymcaleer.dll
+C:\Users\Owner\assignments\mis-221-pa-5-Iveymcaleer\obj\Debug\net6.0\refint\mis-221-pa-5-Iveymcaleer.dll
+C:\Users\Owner\assignments\mis-221-pa-5-Iveymcaleer\obj\Debug\net6.0\mis-221-pa-5-Iveymcaleer.pdb
+C:\Users\Owner\assignments\mis-221-pa-5-Iveymcaleer\obj\Debug\net6.0\mis-221-pa-5-Iveymcaleer.genruntimeconfig.cache
+C:\Users\Owner\assignments\mis-221-pa-5-Iveymcaleer\obj\Debug\net6.0\ref\mis-221-pa-5-Iveymcaleer.dll

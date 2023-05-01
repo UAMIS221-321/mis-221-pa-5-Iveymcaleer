@@ -1,0 +1,130 @@
+namespace mis_221_pa_5_Iveymcaleer
+{
+  public class Membership
+  {
+
+    //this is an extra class for the manager of the gym to add, delete, and update memberships
+    //please look at file to see what the memberships are supposed to look like
+
+    public int memId;
+    public double hourAccess;
+    public double consultantion;
+    public string kidCare;
+    public string premiumClass;
+    public double complimentaryClass;
+    public int cost; 
+    static public int count;
+
+    public Membership() 
+    {
+
+    }
+
+    public Membership(int memId, double hourAccess, double consultantion, string kidCare, string premiumClass, double complimentaryClass, int cost) 
+    {
+      this.memId = memId;
+      this.hourAccess = hourAccess;
+      this.consultantion = consultantion;
+      this.kidCare = kidCare;
+      this.premiumClass = premiumClass;
+      this.complimentaryClass = complimentaryClass;
+      this.cost = cost;
+    }
+
+    public void SetMemId(int memId) 
+    {
+      this.memId = memId;
+    }
+
+    public int GetMemId() 
+    {
+      return memId;
+    }
+
+    public void SetHourAccess(double hourAccess) 
+    {
+      this.hourAccess = hourAccess;
+    }
+
+    public double GetHourAccess() 
+    {
+      return hourAccess;
+    }
+
+    public void SetConsultation(double consultantion) 
+    {
+      this.consultantion = consultantion;
+    }
+
+    public double GetConsultation() 
+    {
+      return consultantion;
+    }
+
+    public void SetKidCare(string kidCare) 
+    {
+      this.kidCare = kidCare;
+    }
+
+    public string GetKidCare() 
+    {
+      return kidCare;
+    }
+
+    public void SetPremiumClass(string premiumClass)
+    {
+      this.premiumClass = premiumClass;
+    }
+
+    public string GetPremiumClass()
+    {
+      return premiumClass;
+    }
+
+    public void SetComplimentaryClass(double complimentaryClass)
+    {
+      this.complimentaryClass = complimentaryClass;
+    }
+
+    public double GetComplimentaryClass()
+    {
+      return complimentaryClass;
+    }
+
+    public void SetCost(int cost) 
+    {
+      this.cost = cost;
+    }
+
+    public int GetCost()
+    {
+      return cost; 
+    }
+
+    static public void SetCount(int count) 
+    {
+      Membership.count = count;
+    }
+
+    static public void IncCount() 
+    {
+      Membership.count++;
+    }
+
+    static public int GetCount() 
+    {
+      return Membership.count;
+    }
+
+    public override string ToString() 
+    {
+      return $"Membership #{memId} gives members {hourAccess}, {consultantion}, {kidCare}, {premiumClass}, and {complimentaryClass} at the cost of {cost}.";
+    }
+
+    public string ToFile() 
+    {
+      return $"{memId}#{hourAccess}#{consultantion}#{kidCare}#{premiumClass}#{complimentaryClass}#{cost}";
+    }
+        
+    }
+}
