@@ -74,7 +74,7 @@ namespace mis_221_pa_5_Iveymcaleer
       return cost; 
     }
 
-    public string SetDate()
+    public string SetDate(string date)
     {
       return date;
     }

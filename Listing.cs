@@ -11,7 +11,7 @@ namespace mis_221_pa_5_Iveymcaleer
         public string listingDate; // This is only going to be displayed to user
         public TimeOnly listingTime;
         public int cost;
-        public bool statusBooked;
+        public bool status;
         private bool delete;
         public int tID;
 
@@ -25,7 +25,7 @@ namespace mis_221_pa_5_Iveymcaleer
         }
 
         // arg constructor 
-        public Listing(int listId, string tName, string classType, int month, int day, int year, string listingDate, TimeOnly listingTime, int cost, bool statusBooked, int tID) 
+        public Listing(int listId, string tName, string classType, int month, int day, int year, string listingDate, TimeOnly listingTime, int cost, bool status, int tID) 
         {
             this.listId = listId;
             this.tName = tName;
@@ -36,7 +36,7 @@ namespace mis_221_pa_5_Iveymcaleer
             this.cost = cost;
             this.listingDate = listingDate;
             this.listingTime = listingTime;
-            this.statusBooked = statusBooked; 
+            this.status = status; 
             this.tID = tID;
         }
 
@@ -139,14 +139,14 @@ namespace mis_221_pa_5_Iveymcaleer
             return year;
         }
 
-        public void SetStatus(bool statusBooked) 
+        public void SetStatus(bool status) 
         {
-            this.statusBooked = statusBooked;
+            this.status = status;
         }
 
         public bool GetStatus() 
         {
-            return statusBooked;
+            return status;
         }
 
         public void SetDelete(bool delete)
@@ -174,12 +174,12 @@ namespace mis_221_pa_5_Iveymcaleer
 
         public override string ToString() 
         {
-            return $"Class #{listId} is lead by {tName}.\nclass: {classType}\t on {listingDate} at {listingTime} .\nspots available: {statusBooked}\n\n";
+            return $"Class #{listId} is lead by {tName}.\nclass: {classType}\t on {listingDate} at {listingTime} .\nspots available: {status}\n\n";
         }
 
         public string ToFile() 
         {
-            return $"{listId}#{tName}#{classType}#{month}#{day}#{year}#{listingDate}#{listingTime}#{cost}#{statusBooked}#{tID}";
+            return $"{listId}#{tName}#{classType}#{month}#{day}#{year}#{listingDate}#{listingTime}#{cost}#{status}#{tID}";
         }
 
     }

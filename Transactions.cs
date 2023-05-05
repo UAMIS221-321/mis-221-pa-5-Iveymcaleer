@@ -13,8 +13,7 @@ namespace mis_221_pa_5_Iveymcaleer
         public int tId;
         public string tName;
         public string classType; // extra field w accessors and mutators
-
-        public string f;
+        //public string f;
         static public int count;
         public int cost;
 
@@ -23,7 +22,7 @@ namespace mis_221_pa_5_Iveymcaleer
 
         }
 
-        public Transactions(int sessionId, string custName, string custEmail, string transactionDate, int month, int day, int year, TimeOnly transactionTime, int tId, string tName, string classType, int cost, string f) 
+        public Transactions(int sessionId, string custName, string custEmail, string transactionDate, int month, int day, int year, TimeOnly transactionTime, int tId, string tName, string classType, int cost) 
         {
             this.sessionId = sessionId;
             this.custName = custName;
@@ -37,7 +36,6 @@ namespace mis_221_pa_5_Iveymcaleer
             this.tName = tName;
             this.classType = classType;
             this.cost = cost;
-            this.f = f;
         }
 
 
@@ -161,15 +159,15 @@ namespace mis_221_pa_5_Iveymcaleer
             return classType;
         }
 
-        public void SetStatus(string f) 
-        {
-            this.f = f;
-        }
+        // public void SetStatus(string f) 
+        // {
+        //     this.f = f;
+        // }
 
-        public string SetStatus()
-        {
-            return f;
-        }
+        // public string SetStatus()
+        // {
+        //     return f;
+        // }
 
 
         static public void SetCount(int count) 
@@ -188,12 +186,12 @@ namespace mis_221_pa_5_Iveymcaleer
 
         public override string ToString() 
         {
-            return $"#{sessionId}, is the session you are booked for, {custName} (with this email: {custEmail} on {transactionDate}).\nReceipt: {month}/{day}/{year}, {transactionTime}\tWith ({tId}){tName} for {classType}.\t${cost}\nSpot is now claimed with '{f}' ";
+            return $"#{sessionId}, is the session you are booked for, {custName} (with this email: {custEmail} on {transactionDate}).\nReceipt: {month}/{day}/{year}, {transactionTime}\tWith ({tId}){tName} for {classType}.\t${cost}\n ";
         }
 
         public string ToFile() 
         {
-            return $"{sessionId}#{custName}#{custEmail}#{transactionDate}#{month}#{day}#{year}#{transactionTime}#{tId}#{tName}#{classType}#{cost}#{f}";
+            return $"{sessionId}#{custName}#{custEmail}#{transactionDate}#{month}#{day}#{year}#{transactionTime}#{tId}#{tName}#{classType}#{cost}";
         }
 
 

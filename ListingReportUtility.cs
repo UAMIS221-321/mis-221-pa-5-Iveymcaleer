@@ -12,48 +12,50 @@ namespace mis_221_pa_5_Iveymcaleer
             this.custMems = custMems;
         }
 
-        // find customer email for 1st control break report //
-        public void FindCustForSessions()
-        {
-            Console.WriteLine("Provide the customer email address to find customer's sessions");
-            string searchVal = (Console.ReadLine());
-            int findCustEmail = FoundCustEmail(searchVal, transactions);
-            if(findCustEmail != -1)
-            {
-                CustomerSessionsReport(transactions);
-            }
-            else
-            {
-                Console.WriteLine("There is no customer data for that email");
-            }
-
-        }
+        
 
         // individual cust sessions report //
         public Transactions[] CustomerSessionsReport (Transactions[] transactions)
         {
-            string curr = transactions[0].GetCustName();
-            int sesCounts = transactions[0].GetID();
-            for(int i = 1; i < Transactions.GetCount(); i++)
+            Console.WriteLine("Provide the customer email address to find customer's sessions");
+            string searchVal = (Console.ReadLine());
+            int findCustEmail = FoundCustEmail(searchVal, transactions);
+            if(findCustEmail == -1)
             {
-                if(transactions[i].GetCustName() == curr)
+                string currCust = transactions[0].GetCustName();
+                string ses = transactions[0].GetDate();
+                for(int i = 1; i < Transactions.GetCount(); i++)
                 {
-                    sesCounts += transactions[i].GetID();
-                }
-                else
-                {
-                    ProcessBreak1(ref curr, ref sesCounts, transactions[i]);
+                    if(transactions[i].GetCustName() == currCust)
+                    {
+                        ses += transactions[i].GetID();
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine($"{currCust} : {ses}");
+                        ses = transactions[i].GetDate();
+                        ProcessBreak1(ref currCust, ref ses, transactions[i]);
+                    }
                 }
             }
+            else
+            {
+                Console.WriteLine("No customer with that email");
+            }
+            
+        
             return transactions;
         }
 
+
+
         // ProcessBreak for above //
-        public void ProcessBreak1(ref string curr, ref int sesCounts, Transactions newTransaction)
+        public void ProcessBreak1(ref string currCust, ref string ses, Transactions newTransaction)
         {
-            Console.WriteLine($"{curr}\t{sesCounts}");
-            curr = newTransaction.GetCustName();
-            sesCounts = newTransaction.GetID();
+            Console.WriteLine($"{currCust}\t{ses}");
+            currCust = newTransaction.GetCustName();
+            ses = newTransaction.GetDate();
             Console.WriteLine("Would you like to save this information to a file?\nEnter yes or no");
             string awnser = Console.ReadLine();
             string fileName = "HistoricalCustSess.txt";
@@ -113,9 +115,10 @@ namespace mis_221_pa_5_Iveymcaleer
         }
         public void CustByMembership(CustomerMemberships[] custMems) 
         {
+            
             string curr = custMems[0].GetCustName();
             int memId = custMems[0].GetCustID();
-            for(int i = 1; i < CustomerMemberships.GetCount(); i++) 
+            for(int i = 1; i < custMems.Length; i++) 
             {
                 if(custMems[i].GetCustName() == curr)
                 {

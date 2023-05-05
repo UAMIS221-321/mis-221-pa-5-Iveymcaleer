@@ -4,6 +4,10 @@ namespace mis_221_pa_5_Iveymcaleer
     {
         Membership[] mem;
 
+        int maxSize = 10;
+
+
+
         public MembershipUtility(Membership[] mem) 
         {
             this.mem = mem;
@@ -11,26 +15,21 @@ namespace mis_221_pa_5_Iveymcaleer
 
         public Membership[] GetAllMemberships() 
         {
+            mem = new Membership[maxSize];
+            Membership.SetCount(0);
+            int memId = Membership.GetCount(); 
             // open
             StreamReader inFile = new StreamReader("memberships.txt");
             // process 
-            Membership.SetCount(0);
             string line = inFile.ReadLine();
             while(line != null) 
             { 
                 string[] temp = line.Split('#');
-                int memId = int.Parse(temp[0]);
-                double hourAccess = double.Parse(temp[1]);
-                double consultantion = double.Parse(temp[2]);
-                double complimentaryClass = double.Parse(temp[5]);
-                int cost = int.Parse(temp[6]);
-                mem[Membership.GetCount()] = new Membership(memId, hourAccess, consultantion, temp[3], temp[4], complimentaryClass, cost);
+                mem[Membership.GetCount()] = new Membership(int.Parse(temp[0]), temp[1], temp[2], temp[3], temp[4], temp[5], int.Parse(temp[6]));
                 Membership.IncCount();
                 line = inFile.ReadLine(); // update read
             }
-
             inFile.Close();
-            //close
             return mem;
         }
         public Membership[] AddMembership() 
@@ -38,22 +37,23 @@ namespace mis_221_pa_5_Iveymcaleer
             Console.Clear();
             Console.WriteLine("To add a new membership please do the following:");
             Console.WriteLine("Enter a membership Id");
-            Membership membership = new Membership();
-            membership.SetMemId(int.Parse(Console.ReadLine()));
+            Membership mems = new Membership();
+            int memId = Listing.GetCount();
+            mems.SetMemId(memId);
             Console.WriteLine("Enter the amount of hour access the customers will have");
-            membership.SetHourAccess(double.Parse(Console.ReadLine()));
-            Console.WriteLine("Enter how many & the amount of time in a free consulation for a member if provided");
-            membership.SetConsultation(double.Parse(Console.ReadLine()));
+            mems.SetHourAccess(Console.ReadLine());
+            Console.WriteLine("Enter how many & the amount of time in a coustomer will have with free consulations");
+            mems.SetConsultation(Console.ReadLine());
             Console.WriteLine("Enter if the membership will inculde complimentary kidCare");
-            membership.SetKidCare(Console.ReadLine());
+            mems.SetKidCare(Console.ReadLine());
             Console.WriteLine("Enter if the membership will inculde premium class options");
-            membership.SetPremiumClass(Console.ReadLine());
+            mems.SetPremiumClass(Console.ReadLine());
             Console.WriteLine("Enter if this membership will include a/many complimentary classes");
-            membership.SetComplimentaryClass(double.Parse(Console.ReadLine()));
+            mems.SetComplimentaryClass(Console.ReadLine());
             Console.WriteLine("Enter the cost of the membership");
-            membership.SetCost(int.Parse(Console.ReadLine()));
+            mems.SetCost(int.Parse(Console.ReadLine()));
 
-            mem[Membership.GetCount()] = membership;
+            mem[Membership.GetCount()] = mems;
             Membership.IncCount();
 
             Save(mem);
@@ -90,15 +90,15 @@ namespace mis_221_pa_5_Iveymcaleer
                 Console.WriteLine("Enter the correct membership ID");
                 mem[foundMem].SetMemId(int.Parse(Console.ReadLine()));
                 Console.WriteLine("Enter the correct hour access");
-                mem[foundMem].SetHourAccess(int.Parse(Console.ReadLine()));
+                mem[foundMem].SetHourAccess(Console.ReadLine());
                 Console.WriteLine("Enter if any & how many free consultations will be given");
-                mem[foundMem].SetConsultation(double.Parse(Console.ReadLine()));
+                mem[foundMem].SetConsultation(Console.ReadLine());
                 Console.WriteLine("Enter if any complimentary kid care will be avaliable");
                 mem[foundMem].SetKidCare(Console.ReadLine());
                 Console.WriteLine("Enter if there will be access to premium classes");
                 mem[foundMem].SetPremiumClass(Console.ReadLine());
                 Console.WriteLine("Enter if there will be a complimentary class and if it will include a regular class, premium class, or both");
-                mem[foundMem].SetComplimentaryClass(double.Parse(Console.ReadLine()));
+                mem[foundMem].SetComplimentaryClass(Console.ReadLine());
                 Console.WriteLine("Enter the cost of this membership per month");
                 mem[foundMem].SetCost(int.Parse(Console.ReadLine()));
 

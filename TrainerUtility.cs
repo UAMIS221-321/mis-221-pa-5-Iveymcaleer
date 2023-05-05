@@ -39,7 +39,7 @@ namespace mis_221_pa_5_Iveymcaleer
         {
             Console.Clear();
             Trainer myTrainer = new Trainer();
-            int trainerID = Trainer.GetCount() +1; // do not get rid of this
+            int trainerID = Trainer.GetCount() +1; 
             myTrainer.SetID(trainerID);
             Console.WriteLine("To add a new trainer please do the following:");
             Console.WriteLine("Enter the trainer's name");
@@ -98,31 +98,6 @@ namespace mis_221_pa_5_Iveymcaleer
             }
             return trainer;
         }
-
-
-        // deletes a trainer //
-        // public void DeleteTrainer(int id)
-        // {
-        //     // GetAllTrainers();
-        //     // Console.WriteLine("What is the trainer ID of the trainer you wish to delete?");
-        //     string tempFile = Path.GetTempFileName();
-        //     int searchVal = int.Parse(Console.ReadLine());
-        //     int foundTrainer = FindTrainer(searchVal, trainer);
-        //     if(foundTrainer !=-1)
-        //     {
-        //         trainer[foundTrainer].SetDelete(true);
-        //         File.Delete("trainers.txt");
-        //         File.Move(tempFile, "trainers.txt");
-        //         Save(trainer);
-        //         SortById(trainer);
-        //         GetAllTrainers();
-        //         Console.WriteLine("Trainer was deleted");
-        //     }
-        //     else
-        //     {
-        //         Console.WriteLine("Trainer not found");
-        //     }
-        // }
 
         public void DeleteTrainer(int trainerID)
         {

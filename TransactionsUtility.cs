@@ -37,7 +37,7 @@ namespace mis_221_pa_5_Iveymcaleer
                 int cost = int.Parse(temp[8]);
                 bool statusBooked = bool.Parse(temp[9]);
                 int tID = int.Parse(temp[10]);
-                listing[Listing.GetCount()] = new Listing(listId, temp[1], temp[2], month, day, year, temp[6], time, cost, statusBooked, tID);
+                listing[Listing.GetCount()] = new Listing(listId, temp[1], temp[2], month, day, year, temp[6], time, cost, bool.Parse(temp[9]), tID);
                 Listing.IncCount();
                 line = inFile.ReadLine(); // update read
             }
@@ -63,7 +63,7 @@ namespace mis_221_pa_5_Iveymcaleer
                 TimeOnly time = TimeOnly.Parse(temp[7]);
                 int tId = int.Parse(temp[8]);
                 int cost = int.Parse(temp[11]);
-                transactions[Transactions.GetCount()] = new Transactions(sessionId, temp[1], temp[2], temp[3], month, day, year, time, tId, temp[9], temp[10], cost, temp[12]);
+                transactions[Transactions.GetCount()] = new Transactions(sessionId, temp[1], temp[2], temp[3], month, day, year, time, tId, temp[9], temp[10], cost);
                 Transactions.IncCount();
                 line = inFile.ReadLine(); // update read
             }
@@ -72,13 +72,11 @@ namespace mis_221_pa_5_Iveymcaleer
         }
 
 
-        // I added an extra part to Book Sessions becuase since I added a memberships extra, I need to make sure the person booking a class,
-        // has a membership because if not they are only granted one free class through the sign in 
-        public void BookSession(Listing[] listing) 
+        public Transactions[] BookSession() 
         {
             Console.Clear();
             GetAllSessions();
-            PrintAllSessions(listing);
+            PrintAllSessions();
             Console.WriteLine("Please enter the session ID of the session you are trying to book?"); 
             int searchVal = int.Parse(Console.ReadLine()); 
             int foundSession = FindSession(searchVal, listing);
@@ -98,14 +96,13 @@ namespace mis_221_pa_5_Iveymcaleer
                     int trainerID = listing[foundSession].GettID(); 
                     string trainerName = listing[foundSession].GetTName();
                     int cost = listing[foundSession].GetCost();
-                    Console.WriteLine("Enter 'false' to mark your spot in the class");
-                    string f = Console.ReadLine();
-                    Transactions newTransaction = new Transactions(sessionID, name, email, date, month, day, year, time, trainerID, trainerName, classType, cost, f);
+                    listing[foundSession].SetStatus(false);
+                    Transactions newTransaction = new Transactions(sessionID, name, email, date, month, day, year, time, trainerID, trainerName, classType, cost);
                     transactions[Transactions.GetCount()] = newTransaction;
                     Transactions.IncCount();
                     SaveSession(transactions);
                     SortById(transactions);
-                    listing[foundSession].SetStatus(false); 
+                    //listing[foundSession].SetStatus(false); 
                     
                     Console.WriteLine("You have completed this transaction!");
             }
@@ -113,11 +110,12 @@ namespace mis_221_pa_5_Iveymcaleer
             {
                 Console.WriteLine("Session not found");
             }
+            return transactions;
         }
 
-        public void CancelTransaction(Listing[] listing) // same thing as deleted
+        public void CancelTransaction(Listing[] listing) 
         {
-            PrintAllSessions(listing);
+            PrintAllSessions();
             Console.WriteLine("What is the session ID of the class you would like to delete?");
             int searchVal = int.Parse(Console.ReadLine());
             int foundSession = FindSession(searchVal, listing);
@@ -147,7 +145,7 @@ namespace mis_221_pa_5_Iveymcaleer
             return -1;
         }
 
-        public Listing[] PrintAllSessions(Listing[] listing) 
+        public void PrintAllSessions() 
         {
             for(int i = 0; i < Listing.GetCount(); i++)
             {
@@ -160,7 +158,6 @@ namespace mis_221_pa_5_Iveymcaleer
                     Console.WriteLine("No spots are avaliable for this class\n");
                 }
             }
-            return listing;
         }
         public void SaveSession(Transactions[] transactions) 
         {

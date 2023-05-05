@@ -61,7 +61,7 @@ namespace mis_221_pa_5_Iveymcaleer
             while(line != null)
             {
                 string[] temp = line.Split("#");
-                transactions[Transactions.GetCount()] = new Transactions(int.Parse(temp[0]), temp[1], temp[2], temp[3], int.Parse(temp[4]), int.Parse(temp[5]), int.Parse(temp[6]), TimeOnly.Parse(temp[7]), int.Parse(temp[8]), temp[9], temp[10], int.Parse(temp[11]), temp[12]);
+                transactions[Transactions.GetCount()] = new Transactions(int.Parse(temp[0]), temp[1], temp[2], temp[3], int.Parse(temp[4]), int.Parse(temp[5]), int.Parse(temp[6]), TimeOnly.Parse(temp[7]), int.Parse(temp[8]), temp[9], temp[10], int.Parse(temp[11]));
                 Transactions.IncCount();
                 line = inFile.ReadLine();
             }

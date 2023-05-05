@@ -7,11 +7,11 @@ namespace mis_221_pa_5_Iveymcaleer
     //please look at file to see what the memberships are supposed to look like
 
     public int memId;
-    public double hourAccess;
-    public double consultantion;
+    public string hourAccess;
+    public string consultantion;
     public string kidCare;
     public string premiumClass;
-    public double complimentaryClass;
+    public string complimentaryClass;
     public int cost; 
     static public int count;
     public bool delete;
@@ -21,7 +21,7 @@ namespace mis_221_pa_5_Iveymcaleer
 
     }
 
-    public Membership(int memId, double hourAccess, double consultantion, string kidCare, string premiumClass, double complimentaryClass, int cost) 
+    public Membership(int memId, string hourAccess, string consultantion, string kidCare, string premiumClass, string complimentaryClass, int cost) 
     {
       this.memId = memId;
       this.hourAccess = hourAccess;
@@ -42,22 +42,22 @@ namespace mis_221_pa_5_Iveymcaleer
       return memId;
     }
 
-    public void SetHourAccess(double hourAccess) 
+    public void SetHourAccess(string hourAccess) 
     {
       this.hourAccess = hourAccess;
     }
 
-    public double GetHourAccess() 
+    public string GetHourAccess() 
     {
       return hourAccess;
     }
 
-    public void SetConsultation(double consultantion) 
+    public void SetConsultation(string consultantion) 
     {
       this.consultantion = consultantion;
     }
 
-    public double GetConsultation() 
+    public string GetConsultation() 
     {
       return consultantion;
     }
@@ -82,12 +82,12 @@ namespace mis_221_pa_5_Iveymcaleer
       return premiumClass;
     }
 
-    public void SetComplimentaryClass(double complimentaryClass)
+    public void SetComplimentaryClass(string complimentaryClass)
     {
       this.complimentaryClass = complimentaryClass;
     }
 
-    public double GetComplimentaryClass()
+    public string GetComplimentaryClass()
     {
       return complimentaryClass;
     }

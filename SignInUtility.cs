@@ -69,9 +69,8 @@ namespace mis_221_pa_5_Iveymcaleer
                 int year = int.Parse(temp[5]);
                 TimeOnly time = TimeOnly.Parse(temp[7]);
                 int cost = int.Parse(temp[8]);
-                bool statusBooked = bool.Parse(temp[9]);
                 int tID = int.Parse(temp[10]);
-                listing[Listing.GetCount()] = new Listing(listId, temp[1], temp[2], month, day, year, temp[6], time, cost, statusBooked, tID);
+                listing[Listing.GetCount()] = new Listing(listId, temp[1], temp[2], month, day, year, temp[6], time, cost, bool.Parse(temp[9]), tID);
                 Listing.IncCount();
                 line = inFile.ReadLine(); // update read
             }
@@ -85,7 +84,14 @@ namespace mis_221_pa_5_Iveymcaleer
         {
             for(int i = 0; i < Listing.GetCount(); i++)
             {
-                Console.WriteLine(listing[i].ToString());
+                if(listing[i].GetStatus() == true)
+                {
+                    Console.WriteLine(listing[i].ToString());
+                }
+                else{
+                    Console.WriteLine("No classes available");
+                }
+                
             }
         }
 

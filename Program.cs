@@ -60,7 +60,7 @@ void Menu(){
             if(menuChoice == 1)
             {
                 Console.Clear();
-                Console.WriteLine("\t\t\t\tWould you like to...\n\nSign in:\t\tEnter '1'\n\nBook or cancel a session:\t\tEnter '2'\n\nSign up for or delete a membership:\tEnter '3'\n\nExit:\tEnter '4'");
+                Console.WriteLine("\t\t\t\tWould you like to...\n\nSign in:\t\tEnter '1'\n\nBook or cancel a session:\t\tEnter '2'\n\nSign up for, edit, or delete a membership:\tEnter '3'\n\nExit:\tEnter '4'");
                 Console.WriteLine("\nNote: If you are a new customer, please sign in to get a free class instead of booking a session");
                 int awnser = int.Parse(Console.ReadLine());
                 if(awnser == 1)
@@ -75,7 +75,8 @@ void Menu(){
                     int chooseS = int.Parse(Console.ReadLine());
                     if(chooseS == 1){  
                         listingUtility.GetAllClasses();
-                        TransactionsUtility.BookSession(listing);
+                        listingUtility.PrintAllListings();
+                        TransactionsUtility.BookSession();
                         Menu();
                     }
                     if(chooseS == 2)
@@ -91,8 +92,27 @@ void Menu(){
                 }
                 if(awnser == 3)
                 {
-                    custMemsU.PurchaseMembership();
-                    Menu();
+                    Console.Clear();
+                    Console.WriteLine("Would you like to purchase, edit, or delete a membership?\nEnter '1' for purchase\nEnter '2' for edit\nEnter '3' for delete");
+                    int chooseM = int.Parse(Console.ReadLine());
+                    if(chooseM == 1)
+                    {
+                        custMemsU.GetAllMemberships(mem);
+                        custMemsU.PurchaseMembership();
+                        Menu();
+                    }
+                    if(chooseM == 2)
+                    {
+                        custMemsU.UpdateCustMembership(custMems);
+                        Menu();
+                    }
+                    if(chooseM == 3)
+                    {
+                        Console.WriteLine("What is your customer ID?");
+                        int custId = int.Parse(Console.ReadLine());
+                        custMemsU.DeleteMembership(custId);
+                        Menu();
+                    }
                 }
                 if(awnser == 4)
                 {
@@ -256,7 +276,7 @@ void Menu(){
                     }
                     if(chooseH == 3)
                     {
-                        //listUtility.CustomersByDate();
+                        listUtility.CustomersByDate(transactions);
                         Menu();
                     }
                     if(chooseH == 4)
