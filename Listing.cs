@@ -12,7 +12,8 @@ namespace mis_221_pa_5_Iveymcaleer
         public TimeOnly listingTime;
         public int cost;
         public bool statusBooked;
-        public bool delete;
+        private bool delete;
+        public int tID;
 
         // class field
         static private int count;
@@ -24,7 +25,7 @@ namespace mis_221_pa_5_Iveymcaleer
         }
 
         // arg constructor 
-        public Listing(int listId, string tName, string classType, int month, int day, int year, string listingDate, TimeOnly listingTime, int cost, bool statusBooked) 
+        public Listing(int listId, string tName, string classType, int month, int day, int year, string listingDate, TimeOnly listingTime, int cost, bool statusBooked, int tID) 
         {
             this.listId = listId;
             this.tName = tName;
@@ -36,6 +37,17 @@ namespace mis_221_pa_5_Iveymcaleer
             this.listingDate = listingDate;
             this.listingTime = listingTime;
             this.statusBooked = statusBooked; 
+            this.tID = tID;
+        }
+
+        public void SettID(int tID) 
+        {
+            this.tID = tID;
+        }
+
+        public int GettID() 
+        {
+            return tID;
         }
 
         public void SetListId(int listId) 
@@ -129,7 +141,7 @@ namespace mis_221_pa_5_Iveymcaleer
 
         public void SetStatus(bool statusBooked) 
         {
-            this.statusBooked = true;
+            this.statusBooked = statusBooked;
         }
 
         public bool GetStatus() 
@@ -141,6 +153,7 @@ namespace mis_221_pa_5_Iveymcaleer
         {
             this.delete = false;  
         }
+
         public bool GetDelete()
         {
             return delete;
@@ -166,7 +179,7 @@ namespace mis_221_pa_5_Iveymcaleer
 
         public string ToFile() 
         {
-            return $"{listId}#{tName}#{classType}#{month}#{day}#{year}#{listingDate}#{cost}#{listingTime}#{statusBooked}";
+            return $"{listId}#{tName}#{classType}#{month}#{day}#{year}#{listingDate}#{listingTime}#{cost}#{statusBooked}#{tID}";
         }
 
     }

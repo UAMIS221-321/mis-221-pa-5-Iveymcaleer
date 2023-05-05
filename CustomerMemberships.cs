@@ -7,7 +7,7 @@ namespace mis_221_pa_5_Iveymcaleer
     public int custId;
     public string custName;
     public string custEmail;
-    public double cost;
+    public int cost;
     public int month;
     public int day;
     public int year;
@@ -21,7 +21,7 @@ namespace mis_221_pa_5_Iveymcaleer
 
     }
 
-    public CustomerMemberships(int custId, string custName, string custEmail, double cost, int month, int day, int year, string date) 
+    public CustomerMemberships(int custId, string custName, string custEmail, int cost, int month, int day, int year, string date) 
     {
       this.custId = custId;
       this.custName = custName;
@@ -64,7 +64,7 @@ namespace mis_221_pa_5_Iveymcaleer
       return custEmail;
     }
 
-    public void SetCost(double cost)
+    public void SetCost(int cost)
     {
       this.cost = cost;
     }
@@ -115,7 +115,7 @@ namespace mis_221_pa_5_Iveymcaleer
 
     public void SetDelete(bool delete)
     {
-      this.delete = false;
+      this.delete = delete;
     }
 
     public bool GetDelete()

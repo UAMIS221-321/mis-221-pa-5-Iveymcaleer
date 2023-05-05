@@ -1,18 +1,41 @@
 ﻿using mis_221_pa_5_Iveymcaleer;
+
 Listing[] listing = new Listing[100];
 Listing.SetCount(0);
 ListingUtility listingUtility = new ListingUtility(listing);
+
 Transactions[] transactions = new Transactions[100];
 Transactions.SetCount(0);
 TransactionsUtility TransactionsUtility = new TransactionsUtility(transactions);
-TransactionsReportUtility transactionsReportUtility = new TransactionsReportUtility(transactions);
+
+CustomerMemberships[] custMems = new CustomerMemberships[200];
+Membership[] mem = new Membership[15];
+SignIn[] signIn = new SignIn[1000];
+CustomerMemberships.SetCount(0);
+CustomerMembershipsUtility custMemsU = new CustomerMembershipsUtility(custMems, listing, signIn, mem);
+
+TransactionsReport[] tReport = new TransactionsReport[100];
+TransactionsReport.SetCount(0);
+TransactionsReportUtility transactionsReportUtility = new TransactionsReportUtility(transactions, custMems);
+
+Membership.SetCount(0);
+MembershipUtility memU = new MembershipUtility(mem);
+
+
+SignIn.SetCount(0);
+SignInUtility signInUtility = new SignInUtility(signIn, listing, custMems);
+
+ListingReport[] listingReports = new ListingReport[100];
+ListingReport.SetCount(0);
+ListingReportUtility listUtility = new ListingReportUtility(transactions, custMems);
+
+Trainer[] trainer = new Trainer[50];
+//Trainer.SetCount(0);
+TrainerUtility train = new TrainerUtility(trainer);
+
 
 Menu();
-// things to do: 
-// add save to file
-// finish menu system 
-// finish report 
-// change status 
+
 
 void Menu(){
     Console.WriteLine("\t\t\t\tWelcome to TLAC!\n\nAre you a ...");
@@ -42,55 +65,45 @@ void Menu(){
                 int awnser = int.Parse(Console.ReadLine());
                 if(awnser == 1)
                 {
-                    SignIn[] signIn = new SignIn[150];
-                    CustomerMemberships[] cust = new CustomerMemberships[200];
-                    SignInUtility checkIn = new SignInUtility(signIn, listing, cust);
-                    checkIn.Welcome(); 
+                    signInUtility.AddCustomer(signIn);
+                    Menu();
+
                 }
                 if(awnser == 2)
                 {
                     Console.WriteLine("Would you like to book or cancel a session?\nEnter '1' for book & Enter '2' for cancel");
                     int chooseS = int.Parse(Console.ReadLine());
-                    if(chooseS == 1){
-                    Transactions[] transations = new Transactions[100];
-                    CustomerMemberships[] cust = new CustomerMemberships[100];
-                    TransactionsUtility transaction = new TransactionsUtility(transations, listing, cust); 
-                    transaction.GetAllSessions(listing);
-                    transaction.BookSession(); 
+                    if(chooseS == 1){  
+                        listingUtility.GetAllClasses();
+                        TransactionsUtility.BookSession(listing);
+                        Menu();
                     }
                     if(chooseS == 2)
                     {
-
+                        TransactionsUtility.CancelTransaction(listing);
+                        Menu();
                     }
                     else
                     {
-                        Console.WriteLine("Please enter valid menu choice");
+                        Console.WriteLine("Invalid menu choice");
+                        Menu();
                     }
                 }
                 if(awnser == 3)
                 {
-                    CustomerMemberships[] custMems = new CustomerMemberships[200];
-                    SignIn[] signIn = new SignIn[150];
-                    Membership[] mem = new Membership[10];
-                    CustomerMembershipsUtility custmem = new CustomerMembershipsUtility(custMems, listing, signIn, mem);
-                    custmem.PurchaseMembership();
+                    custMemsU.PurchaseMembership();
+                    Menu();
                 }
                 if(awnser == 4)
                 {
-                    SignIn[] checkIn = new SignIn[200];
-                    Listing[] listings = new Listing[150];
-                    CustomerMemberships[] cust = new CustomerMemberships[200];
-                    SignInUtility signIn = new SignInUtility(checkIn, listings, cust);
-                    signIn.GoodBye();
+                    listingUtility.GoodBye();
+                    Menu();
+                    Environment.Exit(0);
                 }
                 else
                 {
                     Console.WriteLine("Invalid menu choice");
-                    SignIn[] checkIn = new SignIn[200];
-                    Listing[] listings = new Listing[150];
-                    CustomerMemberships[] cust = new CustomerMemberships[200];
-                    SignInUtility signIn = new SignInUtility(checkIn, listings, cust);
-                    signIn.GoodBye();
+                    Menu();
                 }
                 
             }
@@ -106,39 +119,42 @@ void Menu(){
                     int choose = int.Parse(Console.ReadLine());
                     if(choose == 1)
                     {
-                        Trainer[] trainerss = new Trainer[50];
-                        Trainer.SetCount(0);
-                        TrainerUtility train = new TrainerUtility(trainerss);
-                        trainerss = train.AddTrainer();
+                        Console.Clear();
+                        Trainer trainerNew = train.AddTrainer();
+                        train.Save(trainer);
                         Menu();
                     }
                     if(choose == 2)
                     {
-                        Trainer[] trainerss = new Trainer[50];
-                        Trainer.SetCount(0);
-                        TrainerUtility train = new TrainerUtility(trainerss);
-                        trainerss = train.GetAllTrainers();
-                        trainerss = train.UpdateTrainer();
+                        Console.Clear();
+                        trainer = train.GetAllTrainers();
+                        train.PrintAllTrainers();
+                        train.UpdateTrainer(trainer);
+                        train.Save(trainer);
                         Menu();
                     }
                     if(choose == 3)
                     {
-                        Trainer[] trainerss = new Trainer[50];
-                        Trainer.SetCount(0);
-                        TrainerUtility train = new TrainerUtility(trainerss);
-                        trainerss = train.GetAllTrainers();
-                        trainerss = train.DeleteTrainer();
+                        Console.Clear();
+                        train.GetAllTrainers();
+                        train.PrintAllTrainers();
+                        Console.WriteLine();
+                        Console.WriteLine("What is the ID of the trainer you would like to remove?");
+                        int tId = int.Parse(Console.ReadLine());
+                        train.DeleteTrainer(tId);
+                        trainer = train.GetAllTrainers();
+                        Console.Clear();
                         Menu();
                     }
                     if(choose == 4)
                     {
-                        Trainer[] trainerss = new Trainer[50];
-                        TrainerUtility train = new TrainerUtility(trainerss);
-                        train.GoodByeTrainer();
+                        listingUtility.GoodBye();
+                        Menu();
+                        Environment.Exit(0);
                     }
                     else
                     {
-                        Console.WriteLine("Please enter valid menu choice");
+                        Console.WriteLine("Invalid menu choice");
                         Menu();
                     }
                 }
@@ -150,49 +166,121 @@ void Menu(){
                     if(chooseL == 1)
                     {
                         listing = listingUtility.GetAllClasses();
-                        listing = listingUtility.AddClass();
+                        listing = listingUtility.AddClass(listing);
                         Menu();
                     }
                     if(chooseL == 2)
                     {
                         listing = listingUtility.GetAllClasses();
-                        listing = listingUtility.UpdateClass();
+                        listing = listingUtility.UpdateClass(listing);
                         Menu();
                     }
                     if(chooseL == 3)
                     {
-                        listing = listingUtility.GetAllClasses();
-                        listing = listingUtility.DeleteClass();
+                        Console.Clear();
+                        listingUtility.GetAllClasses();
+                        listingUtility.PrintAllListings();
+                        Console.WriteLine();
+                        Console.WriteLine("What is the ID of the listing you would like to remove?");
+                        int listId = int.Parse(Console.ReadLine());
+                        listingUtility.DeleteClass(listId);
+                        listingUtility.GetAllClasses();
+                        Console.Clear();
                         Menu();
                     }
                     if(chooseL == 4) 
                     {
-                        listingUtility.GoodByeListing();
+                        listingUtility.GoodBye();
+                        Menu();
+                        Environment.Exit(0);
                     }
                     else
                     {
-                        Console.WriteLine("Please enter a valid menu choice");
+                        Console.WriteLine("Invalid menu choice");
                         Menu();
                     }
                 }
             }
             if(menuChoice == 3)
             {
+                Console.Clear();
                 Console.WriteLine("Would you like to manage membership data or run reports?\n\nManage Membership Data:\tEnter '1'\nRun Reports:\tEnter '2'\nExit:\tEnter '3' ");
                 int chooseR = int.Parse(Console.ReadLine());
                 if(chooseR == 1)
                 {
+                    Console.Clear();
                     Console.WriteLine("Add membership:\tEnter '1'\n\nEdit membership:\tEnter '2'\n\nDelete membership:\tEnter '3'\n\nExit:\tEnter '4'");
-                    int mem = int.Parse(Console.ReadLine());
-                    if(mem == 1)
+                    int memChoice = int.Parse(Console.ReadLine());
+                    if(memChoice == 1)
                     {
-                        
+                        memU.AddMembership();
+                        Menu();
                     }
+                    if(memChoice == 2)
+                    {
+                        memU.UpdateMembership();
+                        Menu();
+                    }
+                    if(memChoice == 3)
+                    {
+                        memU.DeleteMembership();
+                        Menu();
+                    }
+                    if(memChoice == 4)
+                    {
+                        listingUtility.GoodBye();
+                        Menu();
+                        Environment.Exit(0);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid menu choice");
+                        Menu();
+                    }
+
                 }
-                transactions = TransactionsUtility.GetAllTransactions();
-                transactionsReportUtility.SortByYear(transactions);
-                transactionsReportUtility.PrintAllTransactions();
-                Menu();
+                if(chooseR == 2)
+                {
+                    Console.Clear();
+                    Console.WriteLine("What reports would you like to run?\n\nIndividual Customer Sessions\tEnter: '1'\nIndividual Customer Memberships\tEnter: '2'\n\nHistorical Customer Sessions\tEnter: '3'\nHistorical Revenue Report\tEnter: '4'\n\nExit\tEnter '5'");
+                    int chooseH = int.Parse(Console.ReadLine());
+                    if(chooseH == 1)
+                    {
+                        listUtility.CustomerSessionsReport(transactions);
+                        Menu();
+                    }
+                    if(chooseH == 2)
+                    {
+                        listUtility.CustByMembership(custMems);
+                        Menu();
+                    }
+                    if(chooseH == 3)
+                    {
+                        //listUtility.CustomersByDate();
+                        Menu();
+                    }
+                    if(chooseH == 4)
+                    {
+                        transactions = TransactionsUtility.GetAllTransactions();
+                        transactionsReportUtility.RevenueReport(transactions);
+                        Menu();
+                    }
+                    if(chooseH == 5)
+                    {
+                        listingUtility.GoodBye();
+                        Menu();
+                        Environment.Exit(0);
+                    }
+                    else{
+                        Console.WriteLine("Invalid Menu Choice");
+                        Menu();
+                    }
+
+                }
+            }if(menuChoice == 4)
+            {
+                listingUtility.GoodBye();
+                Environment.Exit(0);
             }
         }
     }

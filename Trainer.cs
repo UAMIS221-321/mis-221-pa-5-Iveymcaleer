@@ -3,7 +3,6 @@ namespace mis_221_pa_5_Iveymcaleer
     public class Trainer
     {
 
-        //initalized varables
         public int tId;
         public string tName;
         public string classType; // extra field 
@@ -21,15 +20,13 @@ namespace mis_221_pa_5_Iveymcaleer
 
         }
 
-        public Trainer(int tId, string tName, string classType, string mAddress, string eAddress, bool delete) 
+        public Trainer(int tId, string tName, string classType, string mAddress, string eAddress) 
         {
             this.tId = tId;
             this.tName = tName;
             this.classType = classType;
             this.mAddress = mAddress;
             this.eAddress = eAddress;
-            this.delete = delete;
-            //this.count = count;
         }
 
         // access mutators 
@@ -100,7 +97,7 @@ namespace mis_221_pa_5_Iveymcaleer
 
         public void SetDelete(bool delete)
         {
-            this.delete = false; 
+            this.delete = delete; 
         }
         public bool GetDelete()
         {
@@ -109,14 +106,13 @@ namespace mis_221_pa_5_Iveymcaleer
 
         public override string ToString() 
         {
-            return $"Trainer #{tId} is {tName}. His mail address is {mAddress} and his email address is {eAddress}.";
+            return $"Trainer #{tId} is {tName}, who is a {classType} instructor. Their mailing address is {mAddress} and their email address is {eAddress}.";
         }
 
         public string ToFile() 
         {
-            return $"{tId}#{tName}#{mAddress}#{eAddress}";
+            return $"{tId}#{tName}#{classType}#{mAddress}#{eAddress}";
         }
-
         
     }
 }

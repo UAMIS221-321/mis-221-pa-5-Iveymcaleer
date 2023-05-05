@@ -1,5 +1,2 @@
-1#April Young#Pilates & Cycle#1100 Smith Lane Rd#brycey@tlac.com
-2#Mack Woods#Boot Camp & Kick Boxing#1542 Hollywood Blvd#koolmck@tlac.com
-3#Will Carson#Kick Boxing & HIT#1605 Pine Wood Rd#willc@tlac.com
-4#Marie Jones#HIT & Pilates#4105 Green Berry Rd#mariej@tlac.com
-5#Callie Ryder#Cycle & HIT#5203 Fox Wood Blvd#callier@tlac.com
+1#Kelly#HIT#300 Rd#kelly@gmail.com
+3#Yevy#Boxing#300 Rd#yevy@gmail.com

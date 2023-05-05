@@ -2,17 +2,18 @@ namespace mis_221_pa_5_Iveymcaleer
 {
     public class ListingUtility
     {
-        Listing[] listings;
+        public Listing[] listing;
 
-        public ListingUtility(Listing[] listings) 
+        public ListingUtility(Listing[] listing) 
         {
-            this.listings = listings;
+            this.listing = listing;
         }
 
-        public Listing[] GetAllClasses () 
+        // populates classes for listing //
+        public Listing[] GetAllClasses() 
         {
             // open
-            StreamReader inFile = new StreamReader("listing.txt");
+            StreamReader inFile = new StreamReader("listings.txt");
             // process 
             Listing.SetCount(0);
             string line = inFile.ReadLine(); // priming read
@@ -23,19 +24,21 @@ namespace mis_221_pa_5_Iveymcaleer
                 int month = int.Parse(temp[3]);
                 int day = int.Parse(temp[4]);
                 int year = int.Parse(temp[5]);
-                TimeOnly time = TimeOnly.Parse(temp[8]);
-                int cost = int.Parse(temp[7]);
+                TimeOnly time = TimeOnly.Parse(temp[7]);
+                int cost = int.Parse(temp[8]);
                 bool statusBooked = bool.Parse(temp[9]);
-                listings[Listing.GetCount()] = new Listing(listId, temp[1], temp[2], month, day, year, temp[6], time, cost, statusBooked);
+                int tID = int.Parse(temp[10]);
+                listing[Listing.GetCount()] = new Listing(listId, temp[1], temp[2], month, day, year, temp[6], time, cost, statusBooked, tID);
                 Listing.IncCount();
                 line = inFile.ReadLine(); // update read
             }
 
             inFile.Close();
-            return listings;
+            return listing;
         }
-        // add a class
-        public Listing[] AddClass() 
+
+        // add a class //
+        public Listing[] AddClass(Listing[] listings) 
         {
             Console.WriteLine("To add a new class please do the following:");
             Listing listing = new Listing();
@@ -62,15 +65,17 @@ namespace mis_221_pa_5_Iveymcaleer
             listing.SetCost(int.Parse(Console.ReadLine()));
             Console.WriteLine("Enter the status (enter 'true')");
             listing.SetStatus(bool.Parse(Console.ReadLine()));
+            
             listings[Listing.GetCount()] = listing;
             Listing.IncCount();
             Save(listings);
             return listings;
         }
 
+        // Saves an added, edited, or deleted class //
         public void Save(Listing[] listings) 
         {
-            StreamWriter outFile = new StreamWriter("listing.txt");
+            StreamWriter outFile = new StreamWriter("listings.txt");
             for(int i = 0; i < Listing.GetCount(); i++) 
             {
                 outFile.WriteLine(listings[i].ToFile());
@@ -79,7 +84,7 @@ namespace mis_221_pa_5_Iveymcaleer
         }
 
         // edit a trainer
-        public Listing[] UpdateClass() {
+        public Listing[] UpdateClass(Listing[] listings) {
             PrintAllListings();
             Console.WriteLine("Please enter the listing ID for the class you wish to edit"); 
             int searchVal = int.Parse(Console.ReadLine()); 
@@ -104,12 +109,11 @@ namespace mis_221_pa_5_Iveymcaleer
                 listings[foundListing].SetYear(int.Parse(year));
                 string date = month + "/" + day + "/" + year;
                 listings[foundListing].SetDate(date);
-                Console.WriteLine("Enter the correct time (00:00 AM/PM");
+                Console.WriteLine("Enter the correct time (00:00 AM/PM)");
                 listings[foundListing].SetTime(TimeOnly.Parse(Console.ReadLine()));
                 Console.WriteLine("Enter the correct cost");
                 listings[foundListing].SetCost(int.Parse(Console.ReadLine()));
                 Save(listings);
-                SortById();
                 Console.WriteLine("Class added!");
             }
             else
@@ -119,31 +123,36 @@ namespace mis_221_pa_5_Iveymcaleer
             return listings;
         }
 
-        public Listing[] DeleteClass()
+        // deletes a class //
+        public void DeleteClass(int listId)
         {
-            listings = GetAllClasses();
-            Console.WriteLine("What is the listing ID of the class you would like to delete?");
-            int searchVal = int.Parse(Console.ReadLine());
-            int foundClass = FindClass(searchVal);
-            if(foundClass !=-1)
+            GetAllClasses();
+            PrintAllListings();
+            string file = "listings.txt";
+            List<string> linesOfFile = File.ReadAllLines(file).ToList();
+
+            for (int i = 0; i < linesOfFile.Count; i++)
             {
-                listings[foundClass].SetDelete(true);
-                Save(listings);
-                listings = GetAllClasses();
-                Console.WriteLine("Trainer was deleted");
+                string[] temp = linesOfFile[i].Split('#');
+                if (int.Parse(temp[0]) == listId)
+                {
+                    linesOfFile.RemoveAt(i);
+                    break;
+                }
             }
-            else
-            {
-                Console.WriteLine("Listing not found");
-            }
-            return listings;
+
+            //SortById(file);
+
+            File.WriteAllLines(file, linesOfFile);
+            Console.WriteLine("Deleted.");
         }
 
+        // finds a class //
         public int FindClass(int searchVal)
         {
             for(int i = 0; i < Listing.GetCount(); i++)
             {
-                if(listings[i].GetListId() == searchVal) 
+                if(listing[i].GetListId() == searchVal) 
                 {
                     return i;
                 }
@@ -151,43 +160,43 @@ namespace mis_221_pa_5_Iveymcaleer
             return -1;
         }
 
-        public void SortById() 
+
+        public void SortById(string file)
         {
-            int min = 0;
-            for(int i = 0; i < Listing.GetCount() -1; i++) 
+            int min = listing.Length;
+            for (int i = 0; i < min - 1; i++)
             {
-                for(int j = i +1; j < Listing.GetCount(); j++) 
+                for (int j = 0; j < min - 1; j++)
                 {
-                    if(listings[j].GetListId().CompareTo(listings[min].GetListId()) < 0) 
+                    if (listing[j].GetListId() > listing[j+1].GetListId())
                     {
-                        min = j;
+                        Listing temp = listing[j];
+                        listing[j] = listing[j+1];
+                        listing[j+1] = temp;
                     }
-                }
-                if(min != i) 
-                {
-                   Swap(min, i);
                 }
             }
         }
 
-        public void Swap(int x, int y) 
-        {
-            Listing temp = listings[x];
-            listings[x] = listings[y];
-            listings[y] = temp;
-        }
 
-        private void PrintAllListings()
+        // Prints all listings while spots are avaliable //
+        public Listing[] PrintAllListings()
         {
             for(int i = 0; i < Listing.GetCount(); i++)
             {
-                Console.WriteLine(listings[i].ToString());
+                if(listing[i].GetStatus() == true)
+                {
+                Console.WriteLine(listing[i].ToString());
+                }
             }
+            return listing;
         }
 
-        public void GoodByeListing()
+        // Exiting method //
+        public void GoodBye()
         {
             Console.WriteLine("Exiting...");
         }
+
     }
 }

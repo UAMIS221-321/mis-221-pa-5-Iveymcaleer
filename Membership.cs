@@ -14,6 +14,7 @@ namespace mis_221_pa_5_Iveymcaleer
     public double complimentaryClass;
     public int cost; 
     static public int count;
+    public bool delete;
 
     public Membership() 
     {
@@ -114,6 +115,15 @@ namespace mis_221_pa_5_Iveymcaleer
     static public int GetCount() 
     {
       return Membership.count;
+    }
+
+    public void SetDelete(bool delete)
+    {
+      this.delete = delete;  
+    }
+    public bool GetDelete()
+    {
+      return delete;
     }
 
     public override string ToString() 

@@ -111,6 +111,28 @@ namespace mis_221_pa_5_Iveymcaleer
             }
             return mem;
         }
+
+        public Membership[] DeleteMembership()
+        {
+            GetAllMemberships();
+            Console.WriteLine("What is the membership ID of the class you would like to delete?");
+            int searchVal = int.Parse(Console.ReadLine());
+            int foundMem = FindMem(searchVal);
+            if(foundMem !=-1)
+            {
+                mem[foundMem].SetDelete(true);
+                Save(mem);
+                GetAllMemberships();
+                Console.WriteLine("Membership was deleted");
+            }
+            else
+            {
+                Console.WriteLine("Membership not found");
+            }
+            return mem;
+        }
+
+
         public int FindMem(int searchVal)
         {
             for(int i = 0; i < Membership.GetCount(); i++)
@@ -148,6 +170,7 @@ namespace mis_221_pa_5_Iveymcaleer
             mem[x] = mem[y];
             mem[y] = temp;
         }
+
         
     }
 }

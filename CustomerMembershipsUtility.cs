@@ -3,17 +3,17 @@ namespace mis_221_pa_5_Iveymcaleer
     public class CustomerMembershipsUtility
     {
         CustomerMemberships[] custMems;
-        Listing[] listings;
+        Listing[] listing;
 
         SignIn[] signIn;
 
         Membership[] mem;
 
 
-        public CustomerMembershipsUtility(CustomerMemberships[] custMems, Listing[] listings, SignIn[] signIn, Membership[] mem)
+        public CustomerMembershipsUtility(CustomerMemberships[] custMems, Listing[] listing, SignIn[] signIn, Membership[] mem)
         {
             this.custMems = custMems;
-            this.listings = listings;
+            this.listing = listing;
             this.signIn = signIn;
             this.mem = mem;
         }
@@ -33,9 +33,10 @@ namespace mis_221_pa_5_Iveymcaleer
                 int day = int.Parse(temp[4]);
                 int year = int.Parse(temp[5]);
                 TimeOnly time = TimeOnly.Parse(temp[7]);
-                int cost = int.Parse(temp[5]);
-                bool statusBooked = bool.Parse(temp[10]);
-                listings[Listing.GetCount()] = new Listing(listId, temp[1], temp[2], month, day, year, temp[6], time, cost, statusBooked);
+                int cost = int.Parse(temp[8]);
+                bool statusBooked = bool.Parse(temp[9]);
+                int tID = int.Parse(temp[10]);
+                listing[Listing.GetCount()] = new Listing(listId, temp[1], temp[2], month, day, year, temp[6], time, cost, statusBooked, tID);
                 Listing.IncCount();
                 line = inFile.ReadLine(); // update read
             }
@@ -57,9 +58,9 @@ namespace mis_221_pa_5_Iveymcaleer
             if(foundCust != -1)   
             {
                     Console.WriteLine("You will now be given a customer ID");
-                    Random randomCustID = new Random();
-                    int number = randomCustID.Next(1000); 
-                    //custMems[CustomerMemberships.GetCount()].SetCustID(Random.randomCustID());
+                    CustomerMemberships id = new CustomerMemberships();
+                    int custId = CustomerMemberships.GetCount();
+                    //custMems.SetCustID(custId);
                     Console.WriteLine("Please enter your name");
                     custMems[CustomerMemberships.GetCount()].SetCustName(Console.ReadLine());
                     Console.WriteLine("Please enter your email again");
@@ -176,10 +177,6 @@ namespace mis_221_pa_5_Iveymcaleer
             custMems[y] = temp;
         }
 
-        public void GoodBye()
-        {
-            Console.WriteLine("Exiting ...");
-        }
 
         public CustomerMemberships[] DeleteMembership()
         {

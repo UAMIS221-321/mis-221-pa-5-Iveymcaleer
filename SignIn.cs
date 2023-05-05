@@ -5,33 +5,23 @@ namespace mis_221_pa_5_Iveymcaleer
         // this is a class for customers to sign in once at the gym, if they are a new customer they get one class for free and are not charged.
         // Yet, the gym will have access to the cutomers who signed in as new so they can keep track of how many cutomers have not signed up for a membership yet.
         // There is also a sign in for returning members and their email is searched to make sure they pay a monthly fee (membership) to be able to use the gym
+        public int signId;
         public string custName;
-
-        public int custId;
-
-        public int memId;
-
         public DateOnly signInDate;
-
-        public TimeOnly signInTime;
-
         public string custEmail;
-
-
         private static int count;
+
 
         public SignIn() 
         {
 
         }
 
-        public SignIn(string custName, int custId, int memId, DateOnly signInDate, TimeOnly signInTime, string custEmail)
+        public SignIn(int signId, string custName, DateOnly signInDate, string custEmail)
         {
+            this.signId = signId;
             this.custName = custName;
-            this.custId = custId;
-            this.memId = memId;
             this.signInDate = signInDate;
-            this.signInTime = signInTime;
             this.custEmail = custEmail;
         }
 
@@ -45,25 +35,16 @@ namespace mis_221_pa_5_Iveymcaleer
             return custName;
         }
 
-        public void SetCustId(int custId) 
+        public void SetSignId(int signId) 
         {
-            this.custId = custId;
+            this.signId = signId;
         }
 
-        public int GetCustId() 
+        public int GetSignId() 
         {
-            return custId;
+            return signId;
         }
 
-        public void SetMemId(int memId) 
-        {
-            this.memId = memId;
-        }
-
-        public int GetMemId() 
-        {
-            return memId;
-        }
         public void SetDate(DateOnly signInDate) 
         {
             this.signInDate = signInDate;
@@ -74,15 +55,6 @@ namespace mis_221_pa_5_Iveymcaleer
             return signInDate;
         }
 
-        public void SetTime(TimeOnly signInTime)
-        {
-            this.signInTime = signInTime;
-        }
-
-        public TimeOnly GetTime()
-        {
-            return signInTime;
-        }
         public void SetCustEmail(string custEmail) 
         {
             this.custEmail = custEmail;
@@ -110,13 +82,14 @@ namespace mis_221_pa_5_Iveymcaleer
 
         public override string ToString()
         {
-            return $"You, {custName}, are checked in on {signInDate} at {signInTime} with this email: {custEmail}.";
+            return $"#{signId} sign in : {custName}\tsigned in on {signInDate} with this email: {custEmail}.";
         }
 
-        public string ToFile1() 
+        public string ToFile() 
         {
-            return $"{custName}#{signInDate}#{signInTime}#{custEmail}";
+            return $"{signId}#{custName}#{signInDate}#{custEmail}";
         }
+
 
 
     }

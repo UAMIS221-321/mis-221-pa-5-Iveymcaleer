@@ -5,108 +5,58 @@ namespace mis_221_pa_5_Iveymcaleer
         
         SignIn[] signIn;
         Listing[] listing;
+        CustomerMemberships[] custMems;
 
-        CustomerMemberships[] cust;
-
-        public SignInUtility(SignIn[] signIn, Listing[] listing, CustomerMemberships[] cust)
+        public SignInUtility(SignIn[] signIn, Listing[] listing, CustomerMemberships[] custMems)
         {
             this.signIn = signIn;
             this.listing = listing;
-            this.cust = cust;
-        }
-
-        public void Welcome() 
-        {
-            Console.Clear();
-            Console.WriteLine("\t\t\t\tWe hope you are ready to train like a champion today :)\n\n");
-            Console.WriteLine("\t\t\t\tAre you a new customer or are you a returning one?\n\t\t\t\t   Enter '1' for new & Enter '2' for returning");
-            int userInput = int.Parse(Console.ReadLine());
-            while(userInput != 3) 
-            {
-                if(userInput == 1)
-                {
-                    GetAllClasses();
-                    AddCustomer();
-                    GoodBye();
-                }
-                if(userInput == 2)
-                {
-                   WelcomeBack(); 
-                }
-                else
-                {
-                    Console.WriteLine("Invalid Menu Choice");
-                }
-            }
-            
+            this.custMems = custMems;
         }
 
 
-        public SignIn[] AddCustomer() 
+        // add customer //
+        public SignIn[] AddCustomer(SignIn[] signIn) 
         {
             Console.Clear();
-            Console.WriteLine("New customers are given 1 free regular workout class!\n\nYou may choose which one you want once the list is shown.");
-            System.Threading.Thread.Sleep(4000);
-            PrintAllClasses();
-            Console.WriteLine("Please enter your email to earn a free class");
-            string searchVal = (Console.ReadLine());
-            int findCust = FoundCust(searchVal);
-            if(findCust != -1)
-            {
+            Console.WriteLine("Are you a new or returning customer?\nEnter '1' for new or Enter '2' for returning");
+            int awnser = int.Parse(Console.ReadLine());
+            if(awnser == 1){
                 SignIn mySignIn = new SignIn();
+                int signId = SignIn.GetCount();
+                mySignIn.SetSignId(signId);
+                Console.Clear();
                 Console.WriteLine("Please enter your name");
                 mySignIn.SetCustName(Console.ReadLine());
-                Console.WriteLine("Please enter the date");
+                Console.WriteLine("Please enter the date (00/00/0000)");
                 mySignIn.SetDate(DateOnly.Parse(Console.ReadLine()));
-                Console.WriteLine("Please enter the time");
-                mySignIn.SetTime(TimeOnly.Parse(Console.ReadLine()));
-                Console.WriteLine("Please enter your email address again");
+                Console.WriteLine("Please enter your email address");
                 mySignIn.SetCustEmail(Console.ReadLine()); 
 
                 signIn[SignIn.GetCount()] = mySignIn;
                 SignIn.IncCount();
 
-                Save1();
-
+                Save1(signIn);
+                Console.WriteLine("New customers are given 1 free regular workout class!\n\nYou may choose which one you want once the list is shown.");
+                System.Threading.Thread.Sleep(3000);
+                GetAllSessions();
+                PrintAllClasses(listing);
+                System.Threading.Thread.Sleep(3000);
+                
             }
-            else
-            {
-                Console.WriteLine("Your email is already regestered in a membership.\nIf you believe this is not true enter '1'\tor\t enter '2' for check in as a returning customer");
-                int userInput = int.Parse(Console.ReadLine());
-                if(userInput == 1)
-                {
-                    Console.WriteLine("To contact manager for any concerns about your membership...\nEmail: TLACmanager@tlac.com\tCell: (205) 432-5578");
-                }
-                if(userInput == 2)
-                {
-                    SignBackIn(signIn);
-                }
-                else
-                {
-                    Console.WriteLine("Please enter valid menu choice");
-                }
-
+            if(awnser == 2){
+                SignBackIn(signIn);
             }
+            GoodBye();
             return signIn;
         }
 
-        public int FoundCust(string searchVal)
-        {
-            for(int i = 0; i < CustomerMemberships.GetCount(); i++)
-            {
-                if(cust[i].GetCustEmail() == searchVal)
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
 
-
-        public Listing[] GetAllClasses() 
+        // for add customer //
+        public Listing[] GetAllSessions() 
         {
             // open
-            StreamReader inFile = new StreamReader("listing.txt");
+            StreamReader inFile = new StreamReader("listings.txt");
             // process 
             Listing.SetCount(0);
             string line = inFile.ReadLine();
@@ -118,9 +68,10 @@ namespace mis_221_pa_5_Iveymcaleer
                 int day = int.Parse(temp[4]);
                 int year = int.Parse(temp[5]);
                 TimeOnly time = TimeOnly.Parse(temp[7]);
-                int cost = int.Parse(temp[5]);
-                bool statusBooked = bool.Parse(temp[10]);
-                listing[Listing.GetCount()] = new Listing(listId, temp[1], temp[2], month, day, year, temp[6], time, cost, statusBooked);
+                int cost = int.Parse(temp[8]);
+                bool statusBooked = bool.Parse(temp[9]);
+                int tID = int.Parse(temp[10]);
+                listing[Listing.GetCount()] = new Listing(listId, temp[1], temp[2], month, day, year, temp[6], time, cost, statusBooked, tID);
                 Listing.IncCount();
                 line = inFile.ReadLine(); // update read
             }
@@ -129,7 +80,8 @@ namespace mis_221_pa_5_Iveymcaleer
             return listing;
         }
 
-        private void PrintAllClasses()
+        // prints classes //
+        private void PrintAllClasses(Listing[] listing)
         {
             for(int i = 0; i < Listing.GetCount(); i++)
             {
@@ -137,105 +89,60 @@ namespace mis_221_pa_5_Iveymcaleer
             }
         }
 
-        public void Save1() 
+
+    // saves new customers to a file //
+    public void Save1(SignIn[] signIn) 
+    {
+        StreamWriter newCust = new StreamWriter("newCustomers.txt"); 
+        
+        for (int i = 0; i < SignIn.GetCount(); i++) 
         {
-            StreamWriter newCust = new StreamWriter("newCustomers.txt");
-
-            for(int i = 0; i < SignIn.GetCount(); i++) 
-            {
-                newCust.WriteLine(signIn[i].ToFile1());
-                Console.WriteLine("Have a wonderful class!");
-                GoodBye();
-            }
-            newCust.Close();
-            
+            newCust.WriteLine(signIn[i].ToFile());
         }
+        
+        newCust.Close();   
+    }
 
-        public void WelcomeBack() 
-        {
-            Console.WriteLine("Welcome back!\nWe hope you are ready to train like a champion today!");
-            Console.WriteLine("\t\t\t\tLet's get you signed in!");
-            SignBackIn(signIn);
 
-        }
-
+        // sign in for returning cutomers //
         public SignIn[] SignBackIn(SignIn[] signIn) 
         {
-            Console.WriteLine("Please enter your name to sign in");
+            Console.Clear();
             SignIn mySignIn = new SignIn();
-            mySignIn.SetCustName(Console.ReadLine());
+            int signId = SignIn.GetCount();
+            mySignIn.SetSignId(signId);
             Console.WriteLine("Please enter your email address");
-            string searchVal = (Console.ReadLine());
-            mySignIn.SetCustEmail(Console.ReadLine()); 
-            int findCust = FoundCust(searchVal);
-            if(findCust != -1)
-            {
-                Console.WriteLine("Thanks for signing in! Have a wonderful class!");
-            }
-            else
-            {
-                Console.WriteLine("Our data records have not found that email regestered for membership.\n\n");
-                Console.WriteLine("For further assitance, please reach out to the manager.\nEmail: TLACmanager@tlac.com\tCell: (205) 432-5578");
-            }
+            mySignIn.SetCustEmail(Console.ReadLine());
+            Console.WriteLine("Enter your name");
+            mySignIn.SetCustName(Console.ReadLine());
+            Console.WriteLine("Enter the date (00/00/0000)");
+            mySignIn.SetDate(DateOnly.Parse(Console.ReadLine()));
+            Console.WriteLine("Thanks for signing in! Have a wonderful class!");
             signIn[SignIn.GetCount()] = mySignIn;
             SignIn.IncCount();
-            Save2(listing);
+            Save2(signIn);
 
             return signIn;
         }
 
-        public int FindSession(string searchVal) 
-        {
-            for(int i = 0; i < CustomerMemberships.GetCount(); i++)
-            {
-                if(cust[i].GetCustEmail() == searchVal)
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
-         public void Save2(Listing[] listing) 
+
+        // saves a file of returning cutomers //
+        public void Save2(SignIn[] signIns) 
         {
             StreamWriter returnCust = new StreamWriter("returningCustomer.txt");
 
             for(int i = 0; i < SignIn.GetCount(); i++) 
             {
-                returnCust.WriteLine(signIn[i].ToFile1());
+                returnCust.WriteLine(signIn[i].ToFile());
             }
             returnCust.Close();
         }
 
-        public void SortByDate()
-        {
-            for(int i = 0; i < SignIn.GetCount(); i++)
-            {
-                int min = 0;
-                for(int j = i + 1; j < SignIn.GetCount(); j++)
-                {
-                    if(signIn[j].GetDate().CompareTo(signIn[min].GetMemId()) < 0)
-                    {
-                        min = j;
-                    }
-                }
-                if(min != i)
-                {
-                    Swap(ref min, ref i);
-                }
-            }
-        }
-
-        public void Swap(ref int x, ref int y)
-        {
-            SignIn temp = signIn[x];
-            signIn[x] = signIn[y];
-            signIn[y] = temp;
-        }
-
-
-        public void GoodBye()
+        // exiting method //
+        public void GoodBye() 
         {
             Console.WriteLine("Exiting...");
         }
+
     }
 }
